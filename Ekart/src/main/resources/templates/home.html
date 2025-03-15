@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to Ekart</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Roboto', sans-serif;
+        }
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1 {
+            color: #2c3e50;
+            font-size: 3em;
+            margin: 30px 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+        .messages {
+            margin: 20px 0;
+            padding: 15px;
+            border-radius: 8px;
+            background: rgba(255,255,255,0.9);
+        }
+        .button-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 40px;
+        }
+        .button-container a {
+            text-decoration: none;
+        }
+        button {
+            padding: 15px 30px;
+            font-size: 1.1em;
+            border: none;
+            border-radius: 25px;
+            background: #3498db;
+            color: white;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 8px rgba(0,0,0,0.2);
+            background: #2980b9;
+        }
+        .features {
+            margin-top: 50px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            padding: 20px;
+        }
+        .feature-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .feature-card h3 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        .feature-card p {
+            color: #7f8c8d;
+        }
+        .welcome-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            animation: fadeOut 2s ease-in-out forwards;
+            animation-play-state: paused;
+        }
+        .welcome-text {
+            font-size: 4em;
+            color: #2c3e50;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+        @keyframes fadeOut {
+            0% { opacity: 1; }
+            70% { opacity: 1; }
+            100% { opacity: 0; visibility: hidden; }
+        }
+    </style>
+    <script>
+        window.onload = function() {
+            if (!sessionStorage.getItem('welcomeShown')) {
+                const welcomeScreen = document.querySelector('.welcome-screen');
+                welcomeScreen.style.animationPlayState = 'running';
+                sessionStorage.setItem('welcomeShown', 'true');
+            } else {
+                const welcomeScreen = document.querySelector('.welcome-screen');
+                welcomeScreen.style.display = 'none';
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <div class="welcome-screen">
+        <h1 class="welcome-text">Welcome to Ekart</h1>
+    </div>
+    <div class="container">
+        <h1 align="center">Welcome to Ekart</h1>
+        <div class="messages" th:if="${session.success!=null || session.failure!=null }">
+            <h3 style="color: green;" th:text="${session.success}"></h3>
+            <h3 style="color: red;" th:text="${session.failure}"></h3>
+            <th:block th:text="${@messageRemover.remove()}"></th:block>
+        </div>
+        <!-- <div class="button-container">
+            <a href="/vendor/register"><button>Vendor Registration</button></a>
+            <a href="/vendor/login"><button>Vendor Login</button></a>
+            <a href="/customer/register"><button>Customer Registration</button></a>
+            <a href="/customer/login"><button>Customer Login</button></a>
+            <a href="/admin/login"><button>Admin Login</button></a>
+        </div> -->
+        <div class="button-container">
+            <a href="/customer/register"><button>Register</button></a>
+            <a href="/customer/login"><button>Login</button></a>
+        </div>
+
+        <div class="features">
+            <div class="feature-card">
+                <h3>Fast Delivery</h3>
+                <p>Get your products delivered at your doorstep within 24 hours</p>
+            </div>
+            <div class="feature-card">
+                <h3>Secure Payment</h3>
+                <p>Multiple secure payment options available for your convenience</p>
+            </div>
+            <div class="feature-card">
+                <h3>Quality Products</h3>
+                <p>All products are verified for quality before delivery</p>
+            </div>
+            <div class="feature-card">
+                <h3>24/7 Support</h3>
+                <p>Our customer support team is always ready to help you</p>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
